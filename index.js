@@ -30,7 +30,6 @@ ws.on('message', function incoming(data) {
   if (data_clean.indexOf('PRIVMSG') > -1) {
     user = data_clean.match(/\:.+?\!/g)[0]
     user = user.replace(':', '').replace('!', '')
-    console.log(user)
     message = data_clean.substring(data_clean.indexOf("PRIVMSG")).match(/:.+/g)[0].replace(':', '')
 
     if(message.indexOf('!') <= 0) {
