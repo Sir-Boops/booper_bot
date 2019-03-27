@@ -17,7 +17,6 @@ ws.on('open', function open() {
 })
 
 ws.on('message', function incoming(data) {
-
   data_clean = data.replace(/(\r\n|\r|\n)/g, "").trim()
 
   // Reply to PINGs
@@ -30,7 +29,6 @@ ws.on('message', function incoming(data) {
     user = data_clean.match(/\:.+?\!/g)[0]
     user = user.replace(':', '').replace('!', '')
     message = data_clean.substring(data_clean.indexOf("PRIVMSG")).match(/:.+/g)[0].replace(':', '')
-
     if(message.indexOf('!') <= 0) {
       fs.readFile('./config.json', 'utf8', (err, json) => {
         if (err) throw err
