@@ -28,16 +28,19 @@ ws.on('message', function incoming(data) {
 
   // If channel message
   if (data_clean.indexOf('PRIVMSG') > -1) {
-    user = data_clean.match(/(.*)\!/g)[0].replace(':', '').replace('!', '')
+    user = data_clean.match(/\:.+?\!/g)[0]
+    user = user.replace(':', '').replace('!', '')
+    console.log(user)
     message = data_clean.substring(data_clean.indexOf("PRIVMSG")).match(/:.+/g)[0].replace(':', '')
 
     if(message.indexOf('!') <= 0) {
-      fs.readFile('./config.json', 'utf8', (err, data) => {
+      fs.readFile('./config.json', 'utf8', (err, json) => {
         if (err) throw err
         var i
-        for (i = 0; i < JSON.parse(data).commands.length; i++){
-          if (JSON.parse(data).commands[i].cmd === message.split(" ")[0]) {
-            ws.send('PRIVMSG ' + JSON.parse(data).channel + ' :' + JSON.parse(data).commands[i].resp)
+        for (i = 0; i < JSON.parse(json).commands.length; i++){
+          if (JSON.parse(json).commands[i].cmd === message.split(" ")[0]) {
+            console.log(user + ' Ran command ' + JSON.parse(json).commands[i].cmd)
+            ws.send('PRIVMSG ' + JSON.parse(json).channel + ' :' + JSON.parse(json).commands[i].resp)
           }
         }
       })
