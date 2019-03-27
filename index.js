@@ -23,7 +23,6 @@ ws.on('message', function incoming(data) {
   // Reply to PINGs
   if (data_clean === 'PING :tmi.twitch.tv') {
     ws.send('PONG :tmi.twitch.tv')
-    console.log('Replied to a ping')
   }
 
   // If channel message
